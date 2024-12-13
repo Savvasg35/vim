@@ -43,6 +43,25 @@ return {
                     }
                 end,
 
+                gopls = function ()
+                    local lspconfig = require("lspconfig")
+                    local utils = require("lspconfig/util")
+                    lspconfig.gopls.setup({
+                        cmp = {"gopls"},
+                        filetypes = { "go", "gomod", "gowork", "gotmpl" },
+                        root_dir = utils.root_pattern("go.work", "go.mod", ".git"),
+                        settings = {
+                            gopls = {
+                                completeUnimported = true,
+                                usePlaceholders = true,
+                                analyses = {
+                                    unusedparams = true,
+                                },
+                            },
+                        },
+                    })
+                end,
+
                 zls = function()
                     local lspconfig = require("lspconfig")
                     lspconfig.zls.setup({
